@@ -59,20 +59,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                script {
-                    sh """
-                        echo "Testing"
-                        echo "Hello ${params.PERSON}"
-                        echo "Biography: ${params.BIOGRAPHY}"
-                        echo "Toggle: ${params.DEPLOY}"
-                        echo "Choice: ${params.choice}"
-                        echo "Password: ${params.PASSWORD}"
-                    """
-                }     
-            }
-        }
+       
         stage('Deploy') {
             when {
                 expression { "${params.DEPLOY}" == "true"}
