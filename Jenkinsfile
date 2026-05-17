@@ -34,63 +34,63 @@ pipeline {
             }
         }
 
-    //     stage('Install Dependencies') {
-    //         steps {
-    //             script{
-    //                 sh """
-    //                     npm install
-    //                 """
-    //             }
-    //         }
-    //     } 
+        stage('Install Dependencies') {
+            steps {
+                script{
+                    sh """
+                        npm install
+                    """
+                }
+            }
+        } 
 
-    //     stage('Build Image') {
-    //         steps {
-    //            script{
-    //                 withAWS(credentials: 'aws-creds', region: "${region}") {
-    //                     // Commands here have AWS authentication
-    //                     sh """
-    //                         aws ecr get-login-password --region ${region} | \
-    //                         docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${region}.amazonaws.com
-    //                         docker build -t ${ACC_ID}.dkr.ecr.${region}.amazonaws.com/roboshop/catalogue:${appVersion} .
-    //                         docker push ${ACC_ID}.dkr.ecr.${region}.amazonaws.com/roboshop/catalogue:${appVersion}
-    //                     """
-    //                 }
-    //             }
-    //         }
-    //     }
+        stage('Build Image') {
+            steps {
+               script{
+                    withAWS(credentials: 'aws-creds', region: "${region}") {
+                        // Commands here have AWS authentication
+                        sh """
+                            aws ecr get-login-password --region ${region} | \
+                            docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${region}.amazonaws.com
+                            docker build -t ${ACC_ID}.dkr.ecr.${region}.amazonaws.com/roboshop/catalogue:${appVersion} .
+                            docker push ${ACC_ID}.dkr.ecr.${region}.amazonaws.com/roboshop/catalogue:${appVersion}
+                        """
+                    }
+                }
+            }
+        }
        
-    //     stage('Deploy') {
-    //         when {
-    //             expression { "${params.DEPLOY}" == "true"}
-    //         }
-    //         // input {
-    //         //     message "Should we continue?"
-    //         //     ok "Yes, we should."
-    //         //     submitter "alice,bob"
-    //         //     parameters {
-    //         //     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    //         //     }
-    //         // }
-    //         steps {
-    //             script {
-    //                 sh """
-    //                     echo "Deploying"
-    //                 """
-    //             }     
-    //         }
-    //     }
-    // }
-    // //post build
-    // post {
-    //     always {
-    //         echo "I will always say hello!"
-    //     }
-    //     success {
-    //         echo "pipeline success"
-    //     }
-    //     failure {
-    //         echo "pipeline failure"
-    //     }
+        stage('Deploy') {
+            when {
+                expression { "${params.DEPLOY}" == "true"}
+            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            //     submitter "alice,bob"
+            //     parameters {
+            //     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+            //     }
+            // }
+            steps {
+                script {
+                    sh """
+                        echo "Deploying"
+                    """
+                }     
+            }
+        }
+    }
+    //post build
+    post {
+        always {
+            echo "I will always say hello!"
+        }
+        success {
+            echo "pipeline success"
+        }
+        failure {
+            echo "pipeline failure"
+        }
     }
 }
