@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         appVersion = ""
-        ACC_ID = "911701613683"  # aws account id
+        ACC_ID = "911701613683"  // aws account id
         region = "us-east-1"
     }
     options {
